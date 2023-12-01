@@ -20,7 +20,7 @@ async fn cube_the_bits(Path(nums): Path<String>) -> String {
 
     let numbers = numbers
         .iter()
-        .map(|n| n.parse::<u64>().unwrap())
+        .map(|n| n.parse::<i64>().unwrap())
         .fold(0, |acc, n| acc ^ n)
         .pow(3)
         .to_string();
