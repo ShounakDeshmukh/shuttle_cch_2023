@@ -1,9 +1,4 @@
-use axum::{
-    extract:: Path,
-    http::StatusCode,
-    routing::get,
-    Router,
-};
+use axum::{extract::Path, http::StatusCode, routing::get, Router};
 
 // Task -1
 async fn hello_world() -> &'static str {
@@ -15,8 +10,16 @@ async fn fake_error() -> StatusCode {
 }
 
 async fn cube_the_bits(Path(nums): Path<String>) -> String {
-    let numbers = nums
-        .split("/")
+    let mut numbers: Vec<&str> = nums.split('/').collect();
+
+    if numbers.last().unwrap().is_empty() {
+        numbers.pop();
+    }
+
+    println!("{numbers:?}");
+
+    let numbers = numbers
+        .iter()
         .map(|n| n.parse::<u64>().unwrap())
         .fold(0, |acc, n| acc ^ n)
         .pow(3)
